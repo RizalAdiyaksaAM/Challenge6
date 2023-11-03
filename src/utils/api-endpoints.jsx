@@ -8,7 +8,7 @@ export const API_ENDPOINT = {
     LOGIN_GOOGLE: "/v1/auth/google",
     BINAR_POPULAR : "/api/v1/movie/popular",
     BINAR_DETAIL :(id)=> `/api/v1/movie/${id}`,
-    BINAR_SEARCH : "/api/v1/search/movie?"
+    BINAR_SEARCH : "/api/v1/search/movie"
     
   };
   

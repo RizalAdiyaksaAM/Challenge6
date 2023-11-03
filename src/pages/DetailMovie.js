@@ -13,7 +13,7 @@ export const DetailMovie = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  // Ambil data detail film dari Redux store
+
   const dataDetail = useSelector((state) => state.movieDetail.moviesDetail);
 
   console.log (dataDetail, "Detail")

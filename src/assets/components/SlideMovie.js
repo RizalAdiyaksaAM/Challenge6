@@ -14,7 +14,7 @@ import getDataPopular from "../../redux/action/getPopular";
 export const SlideMovie = () => {
 
   const movies = useSelector((state) => state.movie.movies);
-  console.log (movies, "Load data")
+
   const dispatch = useDispatch();
 
   const getMoviePopular = () => {

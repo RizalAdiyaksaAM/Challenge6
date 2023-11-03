@@ -3,28 +3,54 @@ import { Link, useNavigate, useParams } from 'react-router-dom'
 import { Navbar } from '../assets/components/Navbar';
 import { fetchDataMovieSearch } from '../service/get-data-movie-search';
 import { CookieKeys, CookieStorage } from '../utils/cookie';
+import { useDispatch, useSelector } from 'react-redux';
+import getDataSearch from '../redux/action/getSearch';
 
 export const SearchMovie = () => {
-    const { namemovie } = useParams();
-    const [movie, setDataMovie] = useState([]);
-    const navigate = useNavigate()
-   
+    const  {namemovie} = useParams();
+    const [search, setDataSearch] = useState([]);
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const [loading, setLoading] = useState(false);
+
+    const movie = useSelector((state) => state.movieSearch.search);
+
     useEffect(() => {
-      const cekCookie = CookieStorage.get(CookieKeys.AuthToken)
-      if (!cekCookie) {
-          navigate('/')
-      } 
-  })
+    setLoading (true)
+    dispatch(getDataSearch(namemovie))
+    .then((result) => {
+        setLoading (false)
+    }).catch((err) => {
+        setLoading (false)
+    });
+    }, [namemovie, dispatch])
 
-    const movieSearch = async () => {
-        const data = await fetchDataMovieSearch(namemovie);
-        setDataMovie(data.data);
-        console.log(data.data, "data")
-    };
+    useEffect(() => {
+     if (!loading) {
+        setDataSearch(movie)
+     }
+    }, [movie, loading])
+    
+    console.log (movie, "movieSearch")
+    
+//     useEffect(() => {
+//       const cekCookie = CookieStorage.get(CookieKeys.AuthToken)
+//       if (!cekCookie) {
+//           navigate('/')
+//       } 
+//   })
 
-    useEffect(()=> {
-        movieSearch();
-    }, [namemovie]);
+//     const movieSearch = async () => {
+//         const data = await fetchDataMovieSearch(namemovie);
+//         setDataMovie(data.data);
+//         console.log(data.data, "data")
+//     };
+
+//     useEffect(()=> {
+//         movieSearch();
+//     }, [namemovie]);
+
+
 
     return (
     <div className='bg-black'>

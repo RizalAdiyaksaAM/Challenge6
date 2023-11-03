@@ -33,7 +33,7 @@ export const PopularMovie = () => {
   }, [dispatch]);
 
   const movies = useSelector((state) => state.movie.movies);
-  console.log (movies, "Load data")
+
 
 
   return (
