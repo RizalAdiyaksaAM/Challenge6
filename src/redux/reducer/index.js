@@ -4,7 +4,9 @@ import GetMoviePopular from "./movie/GetMoviePopular";
 import GetMovieDetail from "./movie/GetMovieDetail";
 import GetMovieSearch from "./movie/GetMovieSearch";
 
+
 export default combineReducers ({
+
     auth: LoginUser,
     movie : GetMoviePopular,
     movieDetail : GetMovieDetail,

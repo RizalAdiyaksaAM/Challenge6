@@ -4,8 +4,11 @@ import { toast } from "react-toastify";
 import { useGoogleLogin } from "@react-oauth/google";
 import { CookieKeys, CookieStorage } from "../../utils/cookie";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setToken } from "../../redux/reducer/auth/LoginUser";
 
 function GoogleLogin({ buttonText }) {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const registerLoginWithGoogleAction = async (accessToken) => {
     try {
@@ -25,6 +28,9 @@ function GoogleLogin({ buttonText }) {
 
       const response = await axios.request(config);
       const { token } = response.data.data;
+
+      dispatch(setToken(token))
+
 
       //   localStorage.setItem("token", token);
       CookieStorage.set(CookieKeys.AuthToken, token);
