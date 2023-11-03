@@ -9,6 +9,10 @@ const fetchDataMovie = async ({ queryKey }) => {
   return data;
 };
 
+export const reduxGetMovie = async () => {
+  return  await http3.get(API_ENDPOINT.BINAR_POPULAR)
+} 
+
 const useMovieDataQuery = (options) => {
   return useQuery([API_ENDPOINT.BINAR_POPULAR, options], fetchDataMovie);
 };

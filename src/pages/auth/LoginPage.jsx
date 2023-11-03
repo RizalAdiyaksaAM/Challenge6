@@ -4,17 +4,16 @@ import { useEffect } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import GoogleLogin from "../../assets/components/googleLogin";
-
-
-
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
+import { loginUser } from "../../redux/action/authLogin";
+import { useDispatch } from "react-redux";
 
 export const LoginPage = () => {
   const [Password, setPassword] = useState("");
   const [Email, setEmail] = useState("");
   const navigate = useNavigate();
 
-  const { mutate: logUser, isSuccess, error, data } = useLoginUser();
+  // const { mutate: logUser, isSuccess, error, data } = useLoginUser();
 
   const handleInput = (e) => {
     if (e) {
@@ -28,25 +27,32 @@ export const LoginPage = () => {
     }
   };
 
-  if (error) {
-    console.log(error.response.data.message, "ini eror");
-  }
+  const dispatch = useDispatch();
+  
+  // if (error) {
+  //   console.log(error.response.data.message, "ini eror");
+  // }
 
-  const loginUser = () => {
-    logUser({
+  const handleloginUser = async() => {
+    const success = await 
+    dispatch(loginUser({
       email: Email,
       password: Password,
-    });
-  };
-
-  useEffect(() => {
-    if (data?.data.data.token) {
-      toast.success("Anda berhasil login", {
-        theme: "dark",
-      });
-      navigate("/home");
+    }));
+    if(success){
+      navigate("/home"); 
     }
-  }, [data]);
+  };
+  
+
+  // useEffect(() => {
+  //   if (data?.data.data.token) {
+  //     toast.success("Anda berhasil login", {
+  //       theme: "dark",
+  //     });
+  //     navigate("/home");
+  //   }
+  // }, [data]);
 
   return (
     <div className="w-screen h-screen relative bg-[conic-gradient(at_top_right,_var(--tw-gradient-stops))] from-black via-black to-red-700">
@@ -107,7 +113,7 @@ export const LoginPage = () => {
 
           <button
             className="bg-red-600 rounded-lg text-white py-1 mt-4 font-medium "
-            onClick={() => loginUser()}>
+            onClick={() => handleloginUser()}>
             Sign in
           </button>
           

@@ -5,37 +5,27 @@ import { useQuery } from "@tanstack/react-query";
 import http3 from "../utils/http3";
 import { API_ENDPOINT } from "../utils/api-endpoints";
 import { CookieKeys, CookieStorage } from "../utils/cookie";
+import { useDispatch, useSelector } from "react-redux";
+import getDataDetail from "../redux/action/getDetail";
 
 export const DetailMovie = () => {
-  const  movieId  = useParams();
-  const [dataDetail, setDataDetail] = useState("") 
+  const params = useParams();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const navigate = useNavigate()
+  // Ambil data detail film dari Redux store
+  const dataDetail = useSelector((state) => state.movieDetail.moviesDetail);
+
+  console.log (dataDetail, "Detail")
   useEffect(() => {
-    const cekCookie = CookieStorage.get(CookieKeys.AuthToken)
+    const cekCookie = CookieStorage.get(CookieKeys.AuthToken);
     if (!cekCookie) {
-        navigate('/')
-    } 
-})
+      navigate("/");
+    } else {
+      dispatch(getDataDetail(params.movieId));
+    }
+  }, [dispatch, params.movieId, navigate]);
 
-  const getDataDetail = async () => {
-    const response = await http3.get(
-      API_ENDPOINT.BINAR_DETAIL(movieId.movieId)
-    );
-    setDataDetail(response.data.data);
-  };
-  console.log(dataDetail, "data")
-
-  useEffect (()=> {
-    getDataDetail()
-  }, [movieId.movieId])
-
-  // const { data, isLoading } = useQuery({
-  //   queryKey: ["detailsData", movieId],
-  //   queryFn: ({ queryKey }) => getDataDetail(queryKey[1]),
-  // });
-
-  // const result = !isLoading && data.data;
   const genres = dataDetail && dataDetail.genres.map((gen) => gen.name).join(" | ");
   const rate = dataDetail && dataDetail.vote_average.toFixed(1);
 

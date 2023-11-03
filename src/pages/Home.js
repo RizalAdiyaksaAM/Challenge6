@@ -4,6 +4,7 @@ import { SlideMovie } from '../assets/components/SlideMovie'
 import { PopularMovie } from '../assets/components/PopularMovie'
 import { CookieKeys, CookieStorage } from '../utils/cookie'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 
 export const Home = () => {
 
@@ -14,10 +15,12 @@ export const Home = () => {
         navigate('/')
     } 
 })
+
+
   return (
     <div className='bg-black'>
         <Navbar ></Navbar>
-        <SlideMovie></SlideMovie>
+        <SlideMovie></SlideMovie> 
         <PopularMovie></PopularMovie>
     </div>
   )
